@@ -38,7 +38,7 @@ Simply add your Session ID and Parent ID on the Settings panel to send to your W
 - Go to the Application tab (on Chrome) or the Storage tab (on FireFox)
 - Chrome: In the left hand side bar under "Storage", open up "Cookies"
 - In Chrome and FireFox select https://workflowy.com – `sessionid` should be listed
-  - e.g. ulz0qzfzv1l1izs0oa2wuol69jdwtvdj
+  - e.g. `ulz0qzfzv1l1izs0oa2wuol69jdwtvdj`
 
 Note that you should treat this session ID as if it were a password. It should not be shared with anyone or posted publicly. Each Session ID expires after a few months.
 
