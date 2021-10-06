@@ -103,7 +103,7 @@ The environment variables `SESSIONID` and `PARENTID` can be configured in the Ne
 ### Dev Improvements
 
 - [ ] Add tests
-- [ ] Move top-level code to workspaces
+- [x] Move top-level code to workspaces
 
 ## Acknowledgements
 
