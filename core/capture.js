@@ -12,7 +12,18 @@ const capture = async ({ sessionId, parentId, text, note, priority } = {}) => {
     await wf.refresh();
     console.log('⦿ creating workflowy node');
 
-    const result = await wf.create(parentId, text, priority, note);
+    let result;
+    if (text && text.includes('\n')) {
+      result = await wf.createNested(
+        parentId || process.env.PARENTID,
+        text,
+        priority,
+        note
+      );
+    } else {
+      result = await wf.create(parentId, text, priority, note);
+    }
+
     console.log('⦿ created!');
     return result;
   } catch (err) {
