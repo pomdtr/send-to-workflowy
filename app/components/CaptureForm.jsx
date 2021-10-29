@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+
 import useInput from '../hooks/useInput';
+import useLocalStorage from '../hooks/useLocalStorage';
 import { FormControl, FormLabel, FormHelperText } from '@chakra-ui/react';
 
 import { Button, CircularProgress, Checkbox } from '@chakra-ui/react';
 import { Input, Textarea, Box, Collapse } from '@chakra-ui/react';
 
-import { useDisclosure, useToast } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react';
 
 export default function CaptureForm(props) {
   const { parentId, sessionId, top } = props;
@@ -17,7 +19,8 @@ export default function CaptureForm(props) {
 
   const [status, setStatus] = useState('');
 
-  const { isOpen: isNoteShown, onToggle } = useDisclosure();
+  const [isNoteShown, toggleNote] = useLocalStorage('notes', false);
+
   const toast = useToast();
 
   const showToast = (text, status) => {
@@ -27,7 +30,7 @@ export default function CaptureForm(props) {
       status,
       isClosable: false,
       duration: 4000,
-      position: 'top',
+      position: 'bottom',
     });
   };
 
@@ -73,7 +76,13 @@ export default function CaptureForm(props) {
         </FormControl>
 
         <FormControl id="note" mt="4">
-          <Checkbox isChecked={isNoteShown} onChange={onToggle} size="sm">
+          <Checkbox
+            isChecked={isNoteShown}
+            onChange={() => {
+              toggleNote((open) => !open);
+            }}
+            size="sm"
+          >
             {`Include Note${isNoteShown ? ':' : ''}`}
           </Checkbox>
           <Collapse in={isNoteShown} animateOpacity>
