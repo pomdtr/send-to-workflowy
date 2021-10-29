@@ -6,21 +6,22 @@
     "start": "vite",
     "build": "vite build",
     "server": "vite preview",
-    "dev": "npx netlify dev",
-    "bookmarklet": "esbuild --minify bookmarklet/bookmarklet.js --outfile=public/bookmarklet.min.js"
+    "dev": "netlify dev",
+    "bookmarklet": "esbuild --minify bookmarklet/bookmarklet.js --outfile=bookmarklet.min.js"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^1.0.2"
+    "@vitejs/plugin-react": "^1.0.2",
+    "esbuild": "^0.12.24",
+    "netlify": "^8.0.3",
+    "vite": "^2.6.3"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.15",
     "@chakra-ui/react": "^1.6.6",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
-    "esbuild": "^0.12.24",
     "framer-motion": "^4",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "vite": "^2.6.3"
+    "react-dom": "^17.0.2"
   }
 }

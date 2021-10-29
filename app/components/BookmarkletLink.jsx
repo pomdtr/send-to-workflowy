@@ -8,7 +8,7 @@ export default function BookmarkletLink(props) {
 
   useEffect(() => {
     const getBookmarklet = async () => {
-      const response = await fetch('/public/bookmarklet.min.js');
+      const response = await fetch('/bookmarklet.min.js');
       setCode(await response.text());
     };
 
