@@ -251,6 +251,7 @@ module.exports = class WorkflowyClient {
     await this.createTrees(parentid, utils.makeChildren(text), priority);
   }
   async createTrees(parentid, nodeArray, priority) {
+    console.log(JSON.stringify(nodeArray));
     if (typeof parentid !== 'string') {
       throw new Error("must provide parentid (use 'None' for top-level)");
     }
