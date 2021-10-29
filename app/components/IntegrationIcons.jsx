@@ -35,8 +35,8 @@ export default function IntegrationIcons({ sessionId, parentId }) {
         </span>
       </Tooltip>
       <Spacer />
-      <Tooltip hasArrow label="Android support coming soon!">
-        <span style={{ cursor: 'not-allowed' }}>
+      <Tooltip hasArrow label="Add to your homescreen for quick use!">
+        <span>
           <AndroidIcon boxSize="2em" />
         </span>
       </Tooltip>
