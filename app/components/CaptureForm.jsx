@@ -71,7 +71,7 @@ export default function CaptureForm(props) {
       <form onSubmit={handleSubmit}>
         <FormControl id="text" mt="4">
           <FormLabel>Text:</FormLabel>
-          <Input autoFocus type="text" {...bindText} />
+          <Textarea autoFocus type="text" {...bindText} />
           <FormHelperText>Text to go in your new WorkFlowy node</FormHelperText>
         </FormControl>
 
