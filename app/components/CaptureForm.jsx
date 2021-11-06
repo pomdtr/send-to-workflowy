@@ -34,6 +34,12 @@ export default function CaptureForm(props) {
     });
   };
 
+  const keyboardSubmit = (evt) => {
+    if (evt.keyCode === 13 && (evt.ctrlKey || evt.metaKey)) {
+      handleSubmit(evt);
+    }
+  };
+
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     setStatus('loading');
@@ -71,7 +77,12 @@ export default function CaptureForm(props) {
       <form onSubmit={handleSubmit}>
         <FormControl id="text" mt="4">
           <FormLabel>Text:</FormLabel>
-          <Textarea autoFocus type="text" {...bindText} />
+          <Textarea
+            autoFocus
+            type="text"
+            onKeyDown={keyboardSubmit}
+            {...bindText}
+          />
           <FormHelperText>Text to go in your new WorkFlowy node</FormHelperText>
         </FormControl>
 
@@ -86,7 +97,7 @@ export default function CaptureForm(props) {
             {`Include Note${isNoteShown ? ':' : ''}`}
           </Checkbox>
           <Collapse in={isNoteShown} animateOpacity>
-            <Textarea type="text" {...bindNote} />
+            <Textarea type="text" onKeyDown={keyboardSubmit} {...bindNote} />
           </Collapse>
         </FormControl>
 
