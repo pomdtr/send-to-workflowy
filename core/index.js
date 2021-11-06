@@ -247,6 +247,9 @@ module.exports = class WorkflowyClient {
       }
     });
   }
+  async createNested(parentid, text, priority) {
+    await this.createTrees(parentid, utils.makeChildren(text), priority);
+  }
   async createTrees(parentid, nodeArray, priority) {
     if (typeof parentid !== 'string') {
       throw new Error("must provide parentid (use 'None' for top-level)");
@@ -259,12 +262,12 @@ module.exports = class WorkflowyClient {
     if (typeof parentid !== 'string') {
       throw new Error("must provide parentid (use 'None' for top-level)");
     }
-    const { nm, no, ch, id } = topNode;
+    const { nm, no, ch } = topNode;
     const newTopNode = await this.create(parentid, nm, priority, no);
 
     topNode.id = newTopNode.id;
     if (ch && ch.length) {
-      this.createTrees(id, ch, 1000000);
+      this.createTrees(topNode.id, ch, 1000000);
     }
 
     return topNode;

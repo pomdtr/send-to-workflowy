@@ -70,6 +70,32 @@ const utils = {
     }
     return nodes;
   },
+
+  makeChildren(str) {
+    const makeOne = (str = '') => {
+      const cut = (str = '', char = '') => {
+        const pos = str.search(char);
+        return pos === -1
+          ? [str, '']
+          : [str.substr(0, pos), str.substr(pos + 1)];
+      };
+      const outdent = (str = '') => {
+        const spaces = Math.max(0, str.search(/\S/));
+        const re = new RegExp(`(^|\n)\\s{${spaces}}`, 'g');
+        return str.replace(re, '$1');
+      };
+      const [nm, ch] = cut(str, '\n');
+      return { nm, ch: this.makeChildren(outdent(ch)) };
+    };
+    const sanitize = (str = '') => {
+      return str.trim().replace(/\n\s*\n/g, '\n');
+    };
+    return str === ''
+      ? []
+      : sanitize(str)
+          .split(/\n(?!\s)/)
+          .map(makeOne);
+  },
 };
 
 module.exports = utils;

@@ -1,12 +1,12 @@
 [build]
   command = "yarn build"
   functions = "functions"
-  publish = "build"
+  publish = "dist"
   base = "app/"
 
 [dev]
   command = "yarn start"
-  targetPort = 8080
+  targetPort = 3000
   functionsPort = 8081
   framework = "#custom"
 

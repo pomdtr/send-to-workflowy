@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
+
 import useInput from '../hooks/useInput';
+import useLocalStorage from '../hooks/useLocalStorage';
 import { FormControl, FormLabel, FormHelperText } from '@chakra-ui/react';
 
-import { Button, CircularProgress } from '@chakra-ui/react';
-import { Input, Textarea } from '@chakra-ui/react';
+import { Button, CircularProgress, Checkbox } from '@chakra-ui/react';
+import { Input, Textarea, Box, Collapse } from '@chakra-ui/react';
 
-import Message from './Message';
-
-const messages = {
-  success: 'Sent!',
-  error: 'Error connecting to WorkFlowy, please check your configuration.',
-};
+import { useToast } from '@chakra-ui/react';
 
 export default function CaptureForm(props) {
   const { parentId, sessionId, top } = props;
@@ -22,10 +19,31 @@ export default function CaptureForm(props) {
 
   const [status, setStatus] = useState('');
 
+  const [isNoteShown, toggleNote] = useLocalStorage('notes', false);
+
+  const toast = useToast();
+
+  const showToast = (text, status) => {
+    toast({
+      title: text,
+      description: '',
+      status,
+      isClosable: false,
+      duration: 4000,
+      position: 'bottom',
+    });
+  };
+
+  const keyboardSubmit = (evt) => {
+    if (evt.keyCode === 13 && (evt.ctrlKey || evt.metaKey)) {
+      handleSubmit(evt);
+    }
+  };
+
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-
     setStatus('loading');
+
     try {
       const response = await fetch('/send', {
         method: 'POST',
@@ -37,32 +55,52 @@ export default function CaptureForm(props) {
       });
       if (response.ok) {
         setStatus('success');
+
         resetText();
         resetNote();
+
+        showToast('Sent!', 'success');
       } else {
         throw new Error(`${response.status} - ${response.statusText}`);
       }
     } catch (err) {
       console.error(err);
       setStatus('error');
+      showToast(
+        'Error connecting to WorkFlowy, please check your configuration.',
+        'error'
+      );
     }
   };
   return (
     <>
       <form onSubmit={handleSubmit}>
-        {['error', 'success'].includes(status) && (
-          <Message message={messages[status]} status={status} />
-        )}
         <FormControl id="text" mt="4">
           <FormLabel>Text:</FormLabel>
-          <Input type="text" {...bindText} />
+          <Textarea
+            autoFocus
+            type="text"
+            onKeyDown={keyboardSubmit}
+            {...bindText}
+          />
           <FormHelperText>Text to go in your new WorkFlowy node</FormHelperText>
         </FormControl>
+
         <FormControl id="note" mt="4">
-          <FormLabel>Note:</FormLabel>
-          <Textarea type="text" {...bindNote} />
-          <FormHelperText>Add a note, why not?</FormHelperText>
+          <Checkbox
+            isChecked={isNoteShown}
+            onChange={() => {
+              toggleNote((open) => !open);
+            }}
+            size="sm"
+          >
+            {`Include Note${isNoteShown ? ':' : ''}`}
+          </Checkbox>
+          <Collapse in={isNoteShown} animateOpacity>
+            <Textarea type="text" onKeyDown={keyboardSubmit} {...bindNote} />
+          </Collapse>
         </FormControl>
+
         <Button
           width="full"
           mt={4}
