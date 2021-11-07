@@ -257,6 +257,7 @@ module.exports = class WorkflowyClient {
     for (let node of nodeArray) {
       await this.createTree(parentid, node, priority);
     }
+    await this.refresh();
   }
   async createTree(parentid, topNode, priority) {
     if (typeof parentid !== 'string') {
