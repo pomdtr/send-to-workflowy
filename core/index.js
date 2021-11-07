@@ -267,7 +267,7 @@ module.exports = class WorkflowyClient {
 
     topNode.id = newTopNode.id;
     if (ch && ch.length) {
-      this.createTrees(topNode.id, ch, 1000000);
+      await this.createTrees(topNode.id, ch, 1000000);
     }
 
     return topNode;
